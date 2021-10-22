@@ -1,0 +1,11 @@
+.list {
+  @apply flex;
+}
+
+.item {
+  @apply flex items-center outline-none mr-6
+   cursor-pointer text-primary transition;
+  &:hover {
+    @apply text-accents-6 scale-110;
+  }
+}

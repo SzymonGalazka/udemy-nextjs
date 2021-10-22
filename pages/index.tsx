@@ -1,8 +1,13 @@
 import type { InferGetStaticPropsType } from 'next';
-import getAllProducts from '../framework/shopify/get-all-products';
+import Layout from '../components/common/Layout/Layout';
+import { Grid, Hero, Marquee } from '../components/ui';
+import { getAllProducts } from '@framework/product';
+import { getConfig } from '@framework/api/config';
+import { ProductCard } from '@components/product';
 
 export const getStaticProps = async () => {
-  const products = await getAllProducts();
+  const config = getConfig();
+  const products = await getAllProducts(config);
   return {
     props: { products },
     revalidate: 4 * 60 * 60,
@@ -12,5 +17,31 @@ export const getStaticProps = async () => {
 export default function Home({
   products,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <div>{JSON.stringify(products)}</div>;
+  return (
+    <>
+      <Grid layout='A'>
+        {products.slice(0, 3).map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </Grid>
+      <Hero headline='Hero title' description='This is a description' />
+      <Marquee>
+        {products.slice(0, 3).map((product) => (
+          <ProductCard key={product.id} product={product} variant='slim' />
+        ))}
+      </Marquee>
+      <Grid layout='B'>
+        {products.slice(0, 3).map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </Grid>
+      <Marquee variant='secondary'>
+        {products.slice(0, 3).map((product) => (
+          <ProductCard key={product.id} product={product} variant='slim' />
+        ))}
+      </Marquee>
+    </>
+  );
 }
+
+Home.Layout = Layout;
