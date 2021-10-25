@@ -4,13 +4,13 @@ import {
   SHOPIFY_CHECKOUT_URL_COOKIE,
   SHOPIFY_COOKIE_EXPIRE,
 } from '@framework/const';
-import { CheckoutCreatePayload } from '@framework/schema';
+import { Checkout, CheckoutCreatePayload } from '@framework/schema';
 import Cookies from 'js-cookie';
 import { checkoutCreateMutation } from './mutations';
 
 const createCheckout = async (
   fetch: ApiFetch<{ checkoutCreate: CheckoutCreatePayload }>
-): Promise<Maybe<Checkout | undefined>> => {
+): Promise<Checkout> => {
   const { data } = await fetch({
     query: checkoutCreateMutation,
   });
