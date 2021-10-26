@@ -18,7 +18,8 @@ export type HookFetchContext<Input, Output> = {
 export interface ApiHooks {
   cart: {
     useAddItem: MutationHook;
-    useCart: any;
+    useCart: SWRHook;
+    useRemoveItem: MutationHook;
   };
 }
 
@@ -50,12 +51,16 @@ export type UseDataContext = {
 
 export type UseData<Data> = (context: UseDataContext) => Data;
 
+export type SWRHookResponse<Data> = SWRResponse<Data, any> & {
+  isEmpty: boolean;
+};
+
 export type SWRHook<H extends HookDescriptor = any> = {
   fetchOptions: HookFetchOptions;
   fetch: HookFetchFn<H['fetchInput'], H['fetchOutput'], H['data']>;
   useHook(context: {
-    useData: UseData<SWRResponse<H['data'], any>>;
-  }): () => SWRResponse<H['data'], any>;
+    useData: UseData<SWRHookResponse<H['data']>>;
+  }): () => SWRHookResponse<H['data']>;
 };
 
 export type Hook = MutationHook | SWRHook;
