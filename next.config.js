@@ -4,7 +4,7 @@ module.exports = withFrameworkConfig({
   framework: {
     name: process.env.NEXT_PUBLIC_FRAMEWORK,
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   i18n: {
     locales: ['en-US', 'es'],
     defaultLocale: 'en-US',

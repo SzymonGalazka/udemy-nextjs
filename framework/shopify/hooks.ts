@@ -8,7 +8,6 @@ export const shopifyHooks = {
     useAddItem,
     useCart,
     useRemoveItem,
-    useRemoveItem,
     useUpdateItem,
   },
 };
