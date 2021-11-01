@@ -13,7 +13,10 @@ import {
 
 const normalizeProductImages = ({ edges }: { edges: ImageEdge[] }) =>
   edges.map(({ node: { originalSrc, ...rest } }) => ({
-    url: `/images/${originalSrc}`,
+    url:
+      process.env.NEXT_PUBLIC_FRAMEWORK === 'shopify_local'
+        ? `/images/${originalSrc}`
+        : originalSrc ?? '/product-image-placeholder.svg',
     ...rest,
   }));
 
@@ -140,6 +143,7 @@ export const normalizeCart = (checkout: Checkout): Cart => {
   return {
     id: checkout.id,
     createdAt: checkout.createdAt,
+    completedAt: checkout.completedAt,
     currency: {
       code: checkout.totalPriceV2.currencyCode,
     },

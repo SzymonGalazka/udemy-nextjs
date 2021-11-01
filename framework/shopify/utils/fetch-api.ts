@@ -1,5 +1,5 @@
 import { ApiFetchOptions, ApiFetchResults } from '@common/types/api';
-import { API_URL } from '@framework/const';
+import { API_URL, STOREFRONT_TOKEN } from '@framework/const';
 
 const fetchApi = async <T>({
   query,
@@ -7,7 +7,10 @@ const fetchApi = async <T>({
 }: ApiFetchOptions): Promise<ApiFetchResults<T>> => {
   const res = await fetch(API_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': STOREFRONT_TOKEN,
+    },
     body: JSON.stringify({ query, variables }),
   });
   const { data, errors } = await res.json();
